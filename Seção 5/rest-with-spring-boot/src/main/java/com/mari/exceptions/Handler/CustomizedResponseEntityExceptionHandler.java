@@ -2,6 +2,7 @@ package com.mari.exceptions.Handler;
 
 
 import com.mari.exceptions.ExceptionResponse;
+import com.mari.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -23,15 +24,24 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
         ExceptionResponse exceptionResponse = new ExceptionResponse(
                 new Date(),ex.getMessage(),request.getDescription(false));
 
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST); // retorna 400 bad request
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    // tratar a execeção cridada
+    // tratar a execeção de math cridada
     @ExceptionHandler({UnsupportedOperationException.class}) // seta exceções genericas
     public final ResponseEntity<ExceptionResponse> handleBadRequestExceptions(Exception ex, WebRequest request){ // trata exceçoes genéricas
         ExceptionResponse exceptionResponse = new ExceptionResponse(
                 new Date(),ex.getMessage(),request.getDescription(false));
 
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);// retorna 400 bad request
+    }
+
+    // tratar a execeção de recursos nao encontrados cridada
+    @ExceptionHandler({ResourceNotFoundException.class}) // seta exceções genericas
+    public final ResponseEntity<ExceptionResponse> handleNotFoundExceptions(Exception ex, WebRequest request){ // trata exceçoes genéricas
+        ExceptionResponse exceptionResponse = new ExceptionResponse(
+                new Date(),ex.getMessage(),request.getDescription(false));
+
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
     }
 }

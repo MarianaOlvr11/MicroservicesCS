@@ -1,12 +1,10 @@
-package com.mari;
+package com.mari.controllers;
 
 
 import com.mari.exceptions.UnsuportedMathOperationException;
 import com.mari.operations.Basics;
 import com.mari.operations.Validation;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.concurrent.atomic.AtomicLong;
 
 @RestController // retorna um objeto com resposta http
 public class MathController {
